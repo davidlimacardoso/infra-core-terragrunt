@@ -1,5 +1,5 @@
 terraform {
-  source = "https://github.com/davidlimacardoso/infra-core-terraform-modules//network-core"
+  source = "git@github.com:davidlimacardoso/infra-core-terraform-modules//modules/network-core"
 }
 
 include {
