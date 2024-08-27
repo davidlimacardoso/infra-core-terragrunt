@@ -1,3 +1,3 @@
 locals {
-  aws_account_id = "893777461466"
+  aws_account_id = "XXXXXXX"
 }
