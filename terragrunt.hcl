@@ -69,7 +69,7 @@ remote_state {
   backend = "s3"
 
   config = {
-    bucket = "ame-infra-terragrunt-${local.account_id}"
+    bucket = "infra-core-terragrunt-${local.account_id}"
     # key    = "${path_relative_to_include()}/terraform.tfstate"
     key    = "${path_relative_to_include()}/terraform.tfstate"
     # key    = "${get_path_from_repo_root()}/terraform.tfstate"
