@@ -27,23 +27,23 @@ terraform {
     }
   }
   
-  before_hook "terraform_fmt" {
-    commands     = ["apply", "plan"]
-    execute      = ["sh", "-c", "cd ${get_terragrunt_dir()} && terraform fmt"]
-    run_on_error = true
-  }
+  // before_hook "terraform_fmt" {
+  //   commands     = ["apply", "plan"]
+  //   execute      = ["sh", "-c", "cd ${get_terragrunt_dir()} && terraform fmt"]
+  //   run_on_error = true
+  // }
 
-  before_hook "terragrunt_fmt" {
-    commands     = ["apply", "plan"]
-    execute      = ["sh", "-c", "cd ${get_terragrunt_dir()} && terragrunt hclfmt"]
-    run_on_error = true
-  }
+  // before_hook "terragrunt_fmt" {
+  //   commands     = ["apply", "plan"]
+  //   execute      = ["sh", "-c", "cd ${get_terragrunt_dir()} && terragrunt hclfmt"]
+  //   run_on_error = true
+  // }
 
-  before_hook "terraform_docs_readme" {
-    commands     = ["apply", "plan"]
-    execute      = ["sh", "-c", "terraform-docs markdown table --output-file README.md --output-mode inject . && cp -r README.md ${get_terragrunt_dir()}"]
-    run_on_error = true
-  }
+  // before_hook "terraform_docs_readme" {
+  //   commands     = ["apply", "plan"]
+  //   execute      = ["sh", "-c", "terraform-docs markdown table --output-file README.md --output-mode inject . && cp -r README.md ${get_terragrunt_dir()}"]
+  //   run_on_error = true
+  // }
 }
 
 generate "provider" {
