@@ -1,2 +1,3 @@
 .terraform*
 registry.terraform.io/*
+.terragrunt-cache*
