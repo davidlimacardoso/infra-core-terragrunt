@@ -27,8 +27,19 @@ resource "aws_instance" "create_instance" {
   vpc_security_group_ids      = each.value.security_groups
   subnet_id                   = each.value.subnet
   user_data                   = each.value.user_data
+  iam_instance_profile        = try(aws_iam_instance_profile.ec2_instance_profile[each.key].name, null) 
   depends_on                  = [aws_key_pair.create_key]
 
+  tags = {
+    Name = each.value.instance_name
+  }
+}
+
+resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  for_each = { for idx, instance in var.instance_settings : instance.instance_name => instance if instance.iam_role != null }
+  name = "ec2-instance-profile-${each.value.instance_name}"
+  role = each.value.iam_role
+  
   tags = {
     Name = each.value.instance_name
   }
