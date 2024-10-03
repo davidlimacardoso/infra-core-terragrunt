@@ -51,6 +51,14 @@ inputs = {
           cidr_blocks = []
           security_groups = ["sg-0930bd37b07c313ad","sg-0e5c76e6a0559b737"],
           description = "Allow ingress from ELB"
+        },
+        {
+          from_port   = 22,
+          to_port     = 22,
+          protocol    = "tcp",
+          cidr_blocks = []
+          security_groups = ["sg-0e5c76e6a0559b737"],
+          description = "Allow ssh connect from bastion"
         }
       ]
     }
