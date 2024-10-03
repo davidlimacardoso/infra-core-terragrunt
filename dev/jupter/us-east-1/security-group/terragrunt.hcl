@@ -63,6 +63,53 @@ inputs = {
       ]
     }
 
+    vprofile-backend-sg = {
+      description = "Security group for backend instances"
+      name        = "vprofile-backend-sg"
+      ingress = [
+        {
+          from_port   = 1111,
+          to_port     = 1111,
+          protocol    = "tcp",
+          cidr_blocks = []
+          security_groups = ["sg-00fdc7f0cbe4fa825"],
+          description = "Allow access from Tomcat server to Memcache"
+        },
+        {
+          from_port   = 3306,
+          to_port     = 3306,
+          protocol    = "tcp",
+          cidr_blocks = []
+          security_groups = ["sg-00fdc7f0cbe4fa825"],
+          description = "Allow access from Tomcat server to MariaDB"
+        },
+        {
+          from_port   = 5672,
+          to_port     = 5672,
+          protocol    = "tcp",
+          cidr_blocks = []
+          security_groups = ["sg-00fdc7f0cbe4fa825"],
+          description = "Allow access from Tomcat server to RabbitMQ"
+        },
+        {
+          from_port   = 22,
+          to_port     = 22,
+          protocol    = "tcp",
+          cidr_blocks = []
+          security_groups = ["sg-0e5c76e6a0559b737"],
+          description = "Allow ssh connect from bastion"
+        },
+        {
+          from_port   = 0,
+          to_port     = 0,
+          protocol    = "-1",
+          cidr_blocks = []
+          security_groups = ["sg-0e5c76e6a0559b737"],
+          description = "Allow all trafic connect from bastion"
+        }
+      ]
+    }
+
     vprofile-elb-sg = {
       description = "Security group for ELB Vprofile"
       name        = "vprofile-elb-sg"
