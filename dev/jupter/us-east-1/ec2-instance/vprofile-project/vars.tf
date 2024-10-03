@@ -12,6 +12,7 @@ variable "instance_settings" {
     security_groups             = list(string)
     user_data                   = optional(string)
     associate_public_ip_address = optional(bool)
+    iam_role                    = optional(string)
   }))
 
   description = "Set instance settings and properties"
