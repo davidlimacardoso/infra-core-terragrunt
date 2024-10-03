@@ -27,7 +27,7 @@ resource "aws_instance" "create_instance" {
   vpc_security_group_ids      = each.value.security_groups
   subnet_id                   = each.value.subnet
   user_data                   = each.value.user_data
-  iam_instance_profile        = try(aws_iam_instance_profile.ec2_instance_profile[each.key].name, null) 
+  iam_instance_profile        = try(aws_iam_instance_profile.ec2_instance_profile[each.key].name,) 
   depends_on                  = [aws_key_pair.create_key]
 
   tags = {
