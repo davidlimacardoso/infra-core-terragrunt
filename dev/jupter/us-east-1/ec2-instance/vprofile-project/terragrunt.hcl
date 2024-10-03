@@ -26,6 +26,7 @@ inputs = {
       ami             = "ami-005fc0f236362e99f"
       subnet          = dependency.vpc.outputs.private_subnet_ids[0]
       security_groups = [dependency.sg.outputs.id["vprofile-app-sg"]]
+      iam_role        = "Ec2InstanceS3ConnectRole"
       user_data       = <<-EOF
                 #!/bin/bash
                 sudo apt update
