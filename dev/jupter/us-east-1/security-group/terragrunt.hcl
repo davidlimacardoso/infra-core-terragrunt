@@ -68,8 +68,8 @@ inputs = {
       name        = "vprofile-backend-sg"
       ingress = [
         {
-          from_port   = 1111,
-          to_port     = 1111,
+          from_port   = 11211,
+          to_port     = 11211,
           protocol    = "tcp",
           cidr_blocks = []
           security_groups = ["sg-00fdc7f0cbe4fa825"],
