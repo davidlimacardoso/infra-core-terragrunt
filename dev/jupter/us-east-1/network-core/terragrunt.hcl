@@ -25,7 +25,7 @@ inputs = {
   public_subnets = [
     {
       name        = "crow-tester-infra-public"
-      cidr_blocks = ["172.16.0.16/28"]
+      cidr_blocks = ["172.16.0.16/28","172.16.200.0/24"]
       tag         = "infra"
     }
   ]
