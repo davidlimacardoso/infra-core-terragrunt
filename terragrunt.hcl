@@ -25,10 +25,10 @@ terraform {
     env_vars = {
 
       # setting terragrunt caching on root directory
-      TF_PLUGIN_CACHE_DIR = "${get_repo_root()}"
+      TF_PLUGIN_CACHE_DIR="${get_repo_root()}"
 
       # Setting that affects how Terragrunt handles dependencies between modules
-      TERRAGRUNT_FETCH_DEPENDENCY_OUTPUT_FROM_STATE = true
+      TERRAGRUNT_FETCH_DEPENDENCY_OUTPUT_FROM_STATE=true
     }
   }
 
