@@ -1,5 +1,4 @@
 terraform {
-  # source = "git@github.com:davidlimacardoso/infra-core-terraform-modules//modules/security-groups"
   source = "."
 }
 
@@ -7,13 +6,13 @@ include {
   path = find_in_parent_folders()
 }
 
-# dependency "vpc" {
-#   config_path = find_in_parent_folders("network-core")
-# }
+dependency "vpc" {
+  config_path = find_in_parent_folders("network-core")
+}
 
 inputs = {
 
-  vpc_id = "vpc-028e5bd127ffb9444" #dependency.vpc.outputs.vpc_id
+  vpc_id = dependency.vpc.outputs.vpc_id
 
   sg_ingress = {
 
@@ -34,7 +33,6 @@ inputs = {
           to_port     = 22,
           protocol    = "tcp",
           cidr_blocks = []
-          # security_groups = ["sg-0e5c76e6a0559b737"],
           description = "Allow ssh connect from bastion"
         }
       ]
@@ -49,7 +47,6 @@ inputs = {
           to_port     = 11211,
           protocol    = "tcp",
           cidr_blocks = []
-          # security_groups = ["sg-00fdc7f0cbe4fa825"],
           description = "Allow access from Tomcat server to Memcache"
         },
         {
@@ -57,7 +54,6 @@ inputs = {
           to_port     = 3306,
           protocol    = "tcp",
           cidr_blocks = []
-          # security_groups = ["sg-00fdc7f0cbe4fa825"],
           description = "Allow access from Tomcat server to MariaDB"
         },
         {
@@ -65,7 +61,6 @@ inputs = {
           to_port     = 5672,
           protocol    = "tcp",
           cidr_blocks = []
-          # security_groups = ["sg-00fdc7f0cbe4fa825"],
           description = "Allow access from Tomcat server to RabbitMQ"
         },
         {
@@ -73,7 +68,6 @@ inputs = {
           to_port     = 22,
           protocol    = "tcp",
           cidr_blocks = []
-          # security_groups = ["sg-0e5c76e6a0559b737"],
           description = "Allow ssh connect from bastion"
         },
         {
@@ -81,7 +75,6 @@ inputs = {
           to_port     = 0,
           protocol    = "-1",
           cidr_blocks = []
-          # security_groups = ["sg-0e5c76e6a0559b737"],
           description = "Allow all trafic connect from bastion"
         }
       ]
