@@ -1,5 +1,6 @@
+
+# Create load balancer security group 
 resource "aws_security_group" "create_sg_lb" {
-  # for_each    = var.sg_ingress.vprofile-elb-sg
   name        = var.sg_ingress.vprofile-elb-sg.name
   description = var.sg_ingress.vprofile-elb-sg.description
   vpc_id      = var.vpc_id
@@ -33,8 +34,8 @@ resource "aws_security_group" "create_sg_lb" {
   }
 }
 
+# Create tomcat app security group
 resource "aws_security_group" "create_sg_app" {
-  # for_each    = var.sg_ingress
   name        = var.sg_ingress.vprofile-app-sg.name
   description = var.sg_ingress.vprofile-app-sg.description
   vpc_id      = var.vpc_id
@@ -68,8 +69,8 @@ resource "aws_security_group" "create_sg_app" {
   }
 }
 
+# Create backend (Memcache, MariaDB and RabbitMQ) security group to Tomcat to access it
 resource "aws_security_group" "create_sg_backend" {
-  # for_each    = var.sg_ingress
   name        = var.sg_ingress.vprofile-backend-sg.name
   description = var.sg_ingress.vprofile-backend-sg.description
   vpc_id      = var.vpc_id
@@ -104,8 +105,8 @@ resource "aws_security_group" "create_sg_backend" {
   }
 }
 
+# Create bastion security group
 resource "aws_security_group" "create_sg_bastion" {
-  # for_each    = var.sg_ingress.vprofile-bastion-sg
   name        = var.sg_ingress.vprofile-bastion-sg.name
   description = var.sg_ingress.vprofile-bastion-sg.description
   vpc_id      = var.vpc_id
