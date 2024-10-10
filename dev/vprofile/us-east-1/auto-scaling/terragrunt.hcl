@@ -28,7 +28,7 @@ inputs = {
   instance_type        = "t2.micro"
   key_pair_name        = dependency.ec2.outputs.key_pair_name
   security_group       = [dependency.sg.outputs.id["vprofile-app-sg"]]
-  ec2_instance_profile = dependency.ec2.outputs.iam_instance_profile["ec2-instance-profile-vprofile-app01"]
+  ec2_instance_profile = dependency.ec2.outputs.iam_instance_profile[0]
   vpc_zone_identifier  = dependency.vpc.outputs.private_subnet_ids
   target_group_arns    = [dependency.elb.outputs.target_group["vprofile-app-lb-tg"]]
 }
