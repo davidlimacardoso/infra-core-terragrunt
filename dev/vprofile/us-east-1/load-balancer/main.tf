@@ -13,6 +13,11 @@ resource "aws_lb_target_group" "create_lb_tg" {
     unhealthy_threshold = each.value.health_threashold
     healthy_threshold   = each.value.health_threashold
   }
+
+  stickiness {
+    type            = "lb_cookie"
+    cookie_duration = 86400 # Days to seconds (1 day = 86400")
+  }
 }
 
 resource "aws_lb_target_group_attachment" "create_tg_att" {

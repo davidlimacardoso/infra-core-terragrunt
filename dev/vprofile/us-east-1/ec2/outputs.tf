@@ -8,7 +8,7 @@ output "key_pair_name" {
 }
 
 output "iam_instance_profile" {
-  value = zipmap(values(aws_iam_instance_profile.ec2_instance_profile).*.name, values(aws_iam_instance_profile.ec2_instance_profile).*.arn)
+  value = values(aws_iam_instance_profile.ec2_instance_profile).*.name
 }
 
 output "ec2_private_ip" {
