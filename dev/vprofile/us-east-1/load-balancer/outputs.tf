@@ -6,3 +6,7 @@ output "domain_name" {
     }
   }
 }
+
+output "target_group" {
+  value = zipmap(values(aws_lb_target_group.create_lb_tg).*.name, values(aws_lb_target_group.create_lb_tg).*.arn)
+}
