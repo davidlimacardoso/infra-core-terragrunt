@@ -6,3 +6,7 @@ output "ec2_instance" {
 output "key_pair_name" {
   value = aws_key_pair.create_key.key_name
 }
+
+output "iam_instance_profile" {
+  value = zipmap(values(aws_iam_instance_profile.ec2_instance_profile).*.name, values(aws_iam_instance_profile.ec2_instance_profile).*.arn)
+}
