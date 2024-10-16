@@ -1,6 +1,5 @@
 terraform {
-  # source = "git@github.com:davidlimacardoso/infra-core-terraform-modules//modules/network-core"
-  source = "../../../../../infra-core-terraform-modules/modules/network-core"
+  source = "git@github.com:davidlimacardoso/infra-core-terraform-modules//modules/network-core"
 }
 
 include {
