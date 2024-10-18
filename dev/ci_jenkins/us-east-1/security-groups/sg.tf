@@ -12,7 +12,7 @@ resource "aws_security_group" "jenkins_sg" {
       from_port       = ingress.value.from_port
       to_port         = ingress.value.to_port
       cidr_blocks     = lookup(ingress.value, "cidr_blocks", null)
-      security_groups = [aws_security_group.elb_sg.id, aws_security_group.bastion_sg.id]
+      security_groups = ingress.value.from_port != 22 ? [aws_security_group.elb_sg.id] : [aws_security_group.bastion_sg.id]
       prefix_list_ids = lookup(ingress.value, "prefix_list_ids", null)
     }
   }
