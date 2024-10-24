@@ -28,11 +28,7 @@ inputs = {
     
     {
      name = "jenkins-server"
-      protocol    = "HTTP"
-      port = 8080
-      health_port = 8080
       health_path = "/login"
-      health_threashold = 2
       vpc_id = dependency.vpc.outputs.vpc_id
       instance_id = dependency.ec2.outputs.ec2_instance["jenkins-server"]
       lb_security_group =  [dependency.sg.outputs.id["elb_sg"]]
