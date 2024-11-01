@@ -40,3 +40,7 @@ variable "env" {
   description = "Environment name"
   type        = string
 }
+
+locals {
+  project_name = "${var.project}-${var.env}"
+}
