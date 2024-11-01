@@ -33,15 +33,20 @@ resource "aws_codebuild_project" "load-test" {
     image_pull_credentials_type = "SERVICE_ROLE"
     privileged_mode             = true
 
-    environment_variable {
-      name  = "auth_token"
-      value = "secret/k6-dev-test-load-token:TOKEN"
-      type  = "SECRETS_MANAGER"
+
+    dynamic "environment_variable" {
+      for_each = var.asm_keys.keys
+      content {
+        name  = element(var.asm_keys.keys, environment_variable.key)
+        value = "${var.asm_keys.secret_name}:${element(var.asm_keys.keys, environment_variable.key)}"
+        type  = "SECRETS_MANAGER"
+      }
     }
+
   }
 
   source {
-    buildspec           = "aws/stg-buildspec.yml"
+    buildspec           = var.buildspec
     type                = "CODEPIPELINE"
     git_clone_depth     = 0
     report_build_status = false
