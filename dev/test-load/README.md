@@ -181,6 +181,18 @@ Private subnet placement
 
 - Validate metrics flow
 
+3. Connect to Instances:
+    - In ec2 is create a key pair k6-test-load-key.pem, you can use to access the instances
+    - Load the key at the SSH agent
+        ```
+        ssh-add k6-test-load-key.pem
+        ```
+
+    - Connect to Grafana via bastion
+        ```
+        ssh -i k6-test-load-key.pem -J ec2-user@PUBLIC_IP_BASTION ubuntu@PRIVATE_IP_GRAFANA
+        ```
+
 ## Contributing
 1. Branch naming convention: feature/, bugfix/, hotfix/
 
