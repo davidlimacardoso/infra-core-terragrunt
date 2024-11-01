@@ -73,3 +73,21 @@ variable "s3_codepipeline_bucket" {
   description = "S3 bucket key for codepipeline"
   type        = string
 }
+
+variable "buildspec" {
+  description = "Buildspec file path"
+  type        = string
+}
+
+variable "asm_keys" {
+
+  description = "List of Secrets Manager keys"
+  type = object({
+    keys        = list(string)
+    secret_name = string
+  })
+  default = {
+    keys        = []
+    secret_name = ""
+  }
+}
