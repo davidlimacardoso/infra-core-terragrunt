@@ -10,6 +10,12 @@ dependency "vpc" {
   config_path = find_in_parent_folders("network-core")
 }
 
+locals {
+  # See my private ip to use to restrict access from security group
+  my_ip = "${run_cmd("sh", "-c", "curl -s https://checkip.amazonaws.com")}/32"
+}
+
+
 inputs = {
 
   vpc_id = dependency.vpc.outputs.vpc_id
@@ -24,7 +30,7 @@ inputs = {
           from_port   = 22,
           to_port     = 22,
           protocol    = "tcp",
-          cidr_blocks = ["${get_env("$MY_IP")}"]
+          cidr_blocks = ["${local.my_ip}"]
           description = "Allow ssh connect from bastion"
         },
         {
@@ -32,7 +38,7 @@ inputs = {
           to_port     = 8080,
           protocol    = "tcp",
           cidr_blocks = []
-          security_groups = ["sg-069cf8d0d9dcd6b81"],
+          security_groups = [],
           description = "Allow ingress from ELB"
         }
       ]
@@ -46,7 +52,7 @@ inputs = {
           from_port   = 22,
           to_port     = 22,
           protocol    = "tcp",
-          cidr_blocks = ["${get_env("$MY_IP")}"]
+          cidr_blocks = ["${local.my_ip}"]
           security_groups = [],
           description = "Allow ssh ingress"
         }
@@ -61,7 +67,7 @@ inputs = {
           from_port   = 80,
           to_port     = 80,
           protocol    = "tcp",
-          cidr_blocks = ["${get_env("$MY_IP")}"]
+          cidr_blocks = ["${local.my_ip}"]
           security_groups = []
           description = "Allow all http ingress to ELB"
         },
@@ -69,7 +75,7 @@ inputs = {
           from_port   = 443,
           to_port     = 443,
           protocol    = "tcp",
-          cidr_blocks = ["${get_env("$MY_IP")}"]
+          cidr_blocks = ["${local.my_ip}"]
           security_groups = []
           description = "Allow all https ingress to ELB"
         }
