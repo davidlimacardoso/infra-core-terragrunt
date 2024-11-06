@@ -3,6 +3,7 @@ variable "alb" {
   type = list(object({
     name              = string
     health_path       = string
+    port              = number
     vpc_id            = string
     instance_id       = string
     lb_security_group = list(string)
@@ -33,11 +34,11 @@ variable "health_interval" {
   default     = 15
 }
 
-variable "port" {
-  type        = number
-  description = "Port of the instance application"
-  default     = 8080
-}
+# variable "port" {
+#   type        = number
+#   description = "Port of the instance application"
+#   default     = 8080
+# }
 
 variable "protocol" {
   type        = string

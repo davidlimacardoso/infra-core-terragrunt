@@ -81,6 +81,52 @@ inputs = {
         }
       ]
     }
+
+    nexus-sg = {
+      description = "Security group to nexus"
+      name        = "nexus-sg"
+      ingress = [
+        {
+          from_port   = 8081,
+          to_port     = 8081,
+          protocol    = "tcp",
+          cidr_blocks = []
+          security_groups = [],
+          description = "Allow ingress from ELB"
+        },
+        {
+          from_port   = 22,
+          to_port     = 22,
+          protocol    = "tcp",
+          cidr_blocks = []
+          security_groups = [],
+          description = "Allow ssh ingress"
+        }
+      ]
+    }
+
+    nexus-elb-sg = {
+      description = "Security group to nexus"
+      name        = "nexus-elb-sg"
+      ingress = [
+        {
+          from_port   = 80,
+          to_port     = 80,
+          protocol    = "tcp",
+          cidr_blocks = ["${local.my_ip}"]
+          security_groups = []
+          description = "Allow all http ingress to ELB"
+        },
+        {
+          from_port   = 443,
+          to_port     = 443,
+          protocol    = "tcp",
+          cidr_blocks = ["${local.my_ip}"]
+          security_groups = []
+          description = "Allow all https ingress to ELB"
+        }
+      ]
+    }
   }
 
 }

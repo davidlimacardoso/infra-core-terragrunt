@@ -1,13 +1,13 @@
 resource "aws_lb_target_group" "create_lb_tg" {
   for_each             = { for alb in var.alb : alb.name => alb }
   name                 = "${each.value.name}-lb-tg"
-  port                 = var.port
+  port                 = each.value.port
   protocol             = var.protocol
   vpc_id               = each.value.vpc_id
   deregistration_delay = var.deregistration_delay
 
   health_check {
-    port                = var.port
+    port                = each.value.port
     protocol            = var.protocol
     interval            = 15
     path                = each.value.health_path
@@ -26,7 +26,7 @@ resource "aws_lb_target_group_attachment" "create_tg_att" {
   for_each         = { for alb in var.alb : alb.name => alb }
   target_group_arn = aws_lb_target_group.create_lb_tg[each.key].arn
   target_id        = each.value.instance_id
-  port             = var.port
+  port             = each.value.port
 }
 
 resource "aws_lb" "create_lb" {
