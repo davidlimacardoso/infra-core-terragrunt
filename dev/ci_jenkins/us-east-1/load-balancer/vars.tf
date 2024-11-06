@@ -3,6 +3,7 @@ variable "alb" {
   type = list(object({
     name              = string
     health_path       = string
+    port              = number
     vpc_id            = string
     instance_id       = string
     lb_security_group = list(string)
@@ -11,9 +12,15 @@ variable "alb" {
   }))
 }
 
+variable "deregistration_delay" {
+  type        = number
+  description = "Target group deregistration delay in seconds"
+  default     = 120
+}
+
 variable "health_threashold" {
   description = "Total of requests to consider the instance healthy"
-  default     = 4
+  default     = 2
 }
 
 variable "unhealthy_threashold" {
@@ -24,14 +31,14 @@ variable "unhealthy_threashold" {
 variable "health_interval" {
   type        = number
   description = "Interval in seconds to check the health of the instance"
-  default     = 90
+  default     = 15
 }
 
-variable "port" {
-  type        = number
-  description = "Port of the instance application"
-  default     = 8080
-}
+# variable "port" {
+#   type        = number
+#   description = "Port of the instance application"
+#   default     = 8080
+# }
 
 variable "protocol" {
   type        = string
