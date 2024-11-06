@@ -22,15 +22,16 @@ inputs = {
     // Ubuntu web Tomcat instance
     {
       instance_name   = "jenkins-server"
-      instance_type   = "t2.micro"
-      ami             = "ami-005fc0f236362e99f"
+      instance_type   = "t3.medium"
+      ami             = "ami-0866a3c8686eaeeba"
       subnet          = dependency.vpc.outputs.private_subnet_ids[0]
       security_groups = [dependency.sg.outputs.id["jenkins_sg"]]
       user_data       = <<-EOF
                 #!/bin/bash
                 sudo apt update -y
-                sudo apt upgrade -y
+                # sudo apt upgrade -y
                 sudo apt install openjdk-11-jdk -y
+                sudo apt install openjdk-17-jdk -y
                 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
                   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
                 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
@@ -38,6 +39,7 @@ inputs = {
                   /etc/apt/sources.list.d/jenkins.list > /dev/null
                 sudo apt-get update -y
                 sudo apt-get install jenkins -y 
+                sudo apt install maven -y
               EOF
     },
     // Bastion Instance
