@@ -45,6 +45,16 @@ inputs = {
       lb_security_group =  [dependency.sg.outputs.id["nexus_elb_sg"]]
       subnets = dependency.vpc.outputs.public_subnet_ids
       certificate_arn = dependency.acm.outputs.certificate["*.jupter.xyz"]
+    },
+    {
+     name = "sonar-server"
+      health_path = "/"
+      port = 80
+      vpc_id = dependency.vpc.outputs.vpc_id
+      instance_id = dependency.ec2.outputs.ec2_instance["sonar-server"]
+      lb_security_group =  [dependency.sg.outputs.id["sonar_elb_sg"]]
+      subnets = dependency.vpc.outputs.public_subnet_ids
+      certificate_arn = dependency.acm.outputs.certificate["*.jupter.xyz"]
     }
   ]
 }
