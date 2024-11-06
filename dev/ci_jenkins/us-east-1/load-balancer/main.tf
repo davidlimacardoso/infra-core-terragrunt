@@ -1,22 +1,24 @@
 resource "aws_lb_target_group" "create_lb_tg" {
-  for_each = { for alb in var.alb : alb.name => alb }
-  name     = "${each.value.name}-lb-tg"
-  port     = var.port
-  protocol = var.protocol
-  vpc_id   = each.value.vpc_id
+  for_each             = { for alb in var.alb : alb.name => alb }
+  name                 = "${each.value.name}-lb-tg"
+  port                 = var.port
+  protocol             = var.protocol
+  vpc_id               = each.value.vpc_id
+  deregistration_delay = var.deregistration_delay
 
   health_check {
     port                = var.port
     protocol            = var.protocol
-    interval            = 30
+    interval            = 15
     path                = each.value.health_path
     unhealthy_threshold = var.unhealthy_threashold
     healthy_threshold   = var.health_threashold
   }
 
   stickiness {
-    type            = "lb_cookie"
-    cookie_duration = 86400 # Days to seconds (1 day = 86400")
+    enabled = false
+    type    = "lb_cookie"
+    # cookie_duration = 86400 # Days to seconds (1 day = 86400")
   }
 }
 
