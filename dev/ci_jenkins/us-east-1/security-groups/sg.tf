@@ -117,7 +117,7 @@ resource "aws_security_group" "nexus_sg" {
       from_port       = ingress.value.from_port
       to_port         = ingress.value.to_port
       cidr_blocks     = lookup(ingress.value, "cidr_blocks", null)
-      security_groups = ingress.value.from_port != 22 ? [aws_security_group.nexus_elb_sg.id, aws_security_group.jenkins_sg.id] : [aws_security_group.bastion_sg.id]
+      security_groups = ingress.value.from_port != 22 ? [aws_security_group.nexus_elb_sg.id] : [aws_security_group.bastion_sg.id]
       prefix_list_ids = lookup(ingress.value, "prefix_list_ids", null)
     }
   }
@@ -187,7 +187,7 @@ resource "aws_security_group" "sonar_sg" {
       from_port       = ingress.value.from_port
       to_port         = ingress.value.to_port
       cidr_blocks     = lookup(ingress.value, "cidr_blocks", null)
-      security_groups = ingress.value.from_port != 22 ? [aws_security_group.sonar_elb_sg.id, aws_security_group.jenkins_sg.id] : [aws_security_group.bastion_sg.id]
+      security_groups = ingress.value.from_port != 22 ? [aws_security_group.sonar_elb_sg.id] : [aws_security_group.bastion_sg.id]
       prefix_list_ids = lookup(ingress.value, "prefix_list_ids", null)
     }
   }
@@ -241,4 +241,31 @@ resource "aws_security_group" "sonar_elb_sg" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "aws_security_group_rule" "jenkins_from_sonar" {
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.sonar_sg.id
+  security_group_id        = aws_security_group.jenkins_sg.id
+}
+
+resource "aws_security_group_rule" "sonar_from_jenkins" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.jenkins_sg.id
+  security_group_id        = aws_security_group.sonar_sg.id
+}
+
+resource "aws_security_group_rule" "nexus_from_jenkins" {
+  type                     = "ingress"
+  from_port                = 8081
+  to_port                  = 8081
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.jenkins_sg.id
+  security_group_id        = aws_security_group.nexus_sg.id
 }
