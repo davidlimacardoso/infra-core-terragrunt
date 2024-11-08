@@ -250,6 +250,12 @@ resource "aws_security_group_rule" "jenkins_from_sonar" {
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.sonar_sg.id
   security_group_id        = aws_security_group.jenkins_sg.id
+  description              = "Allow traffic from Sonar to Jenkins on port 8080"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
 
 resource "aws_security_group_rule" "sonar_from_jenkins" {
@@ -259,6 +265,13 @@ resource "aws_security_group_rule" "sonar_from_jenkins" {
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.jenkins_sg.id
   security_group_id        = aws_security_group.sonar_sg.id
+  description              = "Allow traffic from sonar to Jenkins on port 80"
+
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
 
 resource "aws_security_group_rule" "nexus_from_jenkins" {
@@ -268,4 +281,11 @@ resource "aws_security_group_rule" "nexus_from_jenkins" {
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.jenkins_sg.id
   security_group_id        = aws_security_group.nexus_sg.id
+  description              = "Allow traffic from Nexus to Jenkins on port 8081"
+
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
