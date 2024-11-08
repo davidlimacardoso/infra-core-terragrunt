@@ -40,7 +40,7 @@ inputs = {
                 sudo apt-get update -y
                 sudo apt-get install jenkins -y 
                 sudo apt install maven -y
-                sudo snap install aws-cli
+                sudo snap install aws-cli --classic
               EOF
     },
     // Nexus
