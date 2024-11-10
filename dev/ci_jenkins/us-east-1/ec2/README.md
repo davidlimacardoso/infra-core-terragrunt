@@ -10,3 +10,16 @@ ssh-add jenkins-key.pem
 ```bash
 ssh -i jenkins-key.pem -J ec2-user@55.191.8.48 ubuntu@10.248.241.78
 ```
+
+### Plugins for Jenkins
+
+Nexus Artifact UploaderVersion
+
+SonarQube Scanner
+
+Build Timestamp
+
+Pipeline Maven Integration
+
+Pipeline Utility Steps
+
