@@ -9,7 +9,7 @@ resource "aws_lb_target_group" "create_lb_tg" {
   health_check {
     port                = each.value.port
     protocol            = var.protocol
-    interval            = 15
+    interval            = 30
     path                = each.value.health_path
     unhealthy_threshold = var.unhealthy_threashold
     healthy_threshold   = var.health_threashold
