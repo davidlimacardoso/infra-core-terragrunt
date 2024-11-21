@@ -40,6 +40,61 @@ inputs = {
                 sudo apt-get update -y
                 sudo apt-get install jenkins -y 
                 sudo apt install maven -y
+                sudo snap install aws-cli --classic
+                sudo useradd devops
+                echo "devops:devops" | sudo chpasswd
+              EOF
+    },
+    // Ubuntu Jenkins - Slave 1
+    {
+      instance_name   = "jenkins-slave-1"
+      instance_type   = "t3.medium"
+      ami             = "ami-0866a3c8686eaeeba"
+      subnet          = dependency.vpc.outputs.public_subnet_ids[1]
+      security_groups = [dependency.sg.outputs.id["jenkins_slave_sg"]]
+      associate_public_ip_address = true
+      user_data       = <<-EOF
+                #!/bin/bash
+                sudo apt update -y
+                # sudo apt upgrade -y
+                sudo apt install openjdk-11-jdk -y
+                sudo apt install openjdk-17-jdk -y
+                sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+                  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+                echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+                  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+                  /etc/apt/sources.list.d/jenkins.list > /dev/null
+                sudo apt-get update -y
+                sudo apt-get install jenkins -y 
+                sudo apt install maven -y
+                sudo snap install aws-cli --classic
+                sudo useradd devops
+                echo "devops:devops" | sudo chpasswd
+              EOF
+    },
+    // Ubuntu Jenkins - Slave 2
+    {
+      instance_name   = "jenkins-slave-2"
+      instance_type   = "t3.medium"
+      ami             = "ami-0866a3c8686eaeeba"
+      subnet          = dependency.vpc.outputs.public_subnet_ids[0]
+      security_groups = [dependency.sg.outputs.id["jenkins_slave_sg"]]
+      associate_public_ip_address = true
+      user_data       = <<-EOF
+                #!/bin/bash
+                sudo apt update -y
+                # sudo apt upgrade -y
+                sudo apt install openjdk-11-jdk -y
+                sudo apt install openjdk-17-jdk -y
+                sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+                  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+                echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+                  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+                  /etc/apt/sources.list.d/jenkins.list > /dev/null
+                sudo apt-get update -y
+                sudo apt-get install jenkins -y 
+                sudo apt install maven -y
+                sudo snap install aws-cli --classic
               EOF
     },
     // Nexus
