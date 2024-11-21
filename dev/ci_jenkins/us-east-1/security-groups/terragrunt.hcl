@@ -44,6 +44,51 @@ inputs = {
       ]
     }
 
+    jenkins-slave = {
+      description = "Security group to Jenkins Slave"
+      name        = "jenkins-slave-sg"
+      ingress = [
+        {
+          from_port   = 22,
+          to_port     = 22,
+          protocol    = "tcp",
+          cidr_blocks = ["${local.my_ip}"]
+          description = "Allow ssh connect from bastion"
+        },
+        {
+          from_port   = 8080,
+          to_port     = 8080,
+          protocol    = "tcp",
+          cidr_blocks = ["${local.my_ip}","177.103.10.194/32"]
+          security_groups = [],
+          description = "Allow ingress from IPs"
+        }
+      ]
+    }
+
+    jenkins-slave-elb-sg = {
+      description = "Security group for ELB Jenkins"
+      name        = "jenkins-slave-elb-sg"
+      ingress = [
+        {
+          from_port   = 80,
+          to_port     = 80,
+          protocol    = "tcp",
+          cidr_blocks = ["${local.my_ip}"]
+          security_groups = []
+          description = "Allow all http ingress to ELB"
+        },
+        {
+          from_port   = 443,
+          to_port     = 443,
+          protocol    = "tcp",
+          cidr_blocks = ["${local.my_ip}"]
+          security_groups = []
+          description = "Allow all https ingress to ELB"
+        }
+      ]
+    }
+
     bastion-sg = {
       description = "Security group to bastion access"
       name        = "ci-bastion-sg"
